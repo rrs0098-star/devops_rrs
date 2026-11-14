@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f5">
+  <title>penny — Your money, in perspective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="penny home"><span class="brand-mark">p</span><span>penny</span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav">
+        <a class="nav-link active" href="#overview" data-section="overview"><span class="nav-icon">◫</span>Overview</a>
+        <a class="nav-link" href="#transactions" data-section="transactions"><span class="nav-icon">↔</span>Transactions</a>
+        <a class="nav-link" href="#budgets" data-section="budgets"><span class="nav-icon">▤</span>Budgets</a>
+        <a class="nav-link" href="#insights" data-section="insights"><span class="nav-icon">⌁</span>Insights</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-tip">
+          <div class="tip-icon">✳</div>
+          <strong>A little progress<br>adds up.</strong>
+          <span>You’re building a better money habit. Keep going.</span>
+          <div class="tip-dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <button class="profile-button" type="button" aria-label="Account settings">
+          <span class="avatar">A</span><span class="profile-copy"><strong>Alex Morgan</strong><small>Personal space</small></span><span class="more">···</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="mobile-brand" type="button"><span class="brand-mark">p</span> penny</button>
+        <div class="breadcrumb"><span>My workspace</span><span class="crumb-slash">/</span><strong>Overview</strong></div>
+        <div class="topbar-actions">
+          <button class="icon-button notification-button" type="button" aria-label="Notifications">♧<span class="notification-dot"></span></button>
+          <button class="date-selector" id="month-selector" type="button" aria-label="Show current month"><span class="calendar-icon">▦</span><span id="month-label">This month</span><span class="chevron">⌄</span></button>
+          <button class="button button-primary top-add" type="button" data-open-dialog><span>＋</span> Add transaction</button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="welcome-row">
+          <div>
+            <p class="eyebrow" id="today-label">YOUR MONEY AT A GLANCE</p>
+            <h1>Good morning, Alex <span class="wave">✳</span></h1>
+            <p class="subtitle">Here’s how your money is looking this month.</p>
+          </div>
+          <button class="button button-quiet" id="export-button" type="button"><span class="export-icon">↥</span> Export report</button>
+        </section>
+
+        <section class="summary-grid" aria-label="Monthly summary">
+          <article class="summary-card balance-card">
+            <div class="card-top"><span class="card-label">Total balance</span><span class="card-icon balance-icon">◈</span></div>
+            <div class="metric" id="balance-value">₹0</div>
+            <div class="metric-foot"><span class="trend-pill positive">↗ 8.2%</span><span>vs. last month</span></div>
+            <div class="balance-decoration"></div>
+          </article>
+          <article class="summary-card">
+            <div class="card-top"><span class="card-label">Income</span><span class="card-icon income-icon">↙</span></div>
+            <div class="metric" id="income-value">₹0</div>
+            <div class="metric-foot"><span class="metric-caption">This month</span><span class="micro-trend">↗ 4.5%</span></div>
+            <div class="mini-bars income-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </article>
+          <article class="summary-card">
+            <div class="card-top"><span class="card-label">Expenses</span><span class="card-icon expense-icon">↗</span></div>
+            <div class="metric" id="expense-value">₹0</div>
+            <div class="metric-foot"><span class="metric-caption">This month</span><span class="micro-trend down">↘ 2.1%</span></div>
+            <div class="mini-bars expense-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </article>
+          <article class="summary-card savings-card">
+            <div class="card-top"><span class="card-label">You saved</span><span class="card-icon savings-icon">✳</span></div>
+            <div class="metric" id="saved-value">₹0</div>
+            <div class="metric-foot"><span class="metric-caption">of your income</span><span class="savings-rate" id="savings-rate">0%</span></div>
+            <div class="savings-track"><span id="savings-progress"></span></div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel spending-panel" id="insights">
+            <div class="panel-heading">
+              <div><h2>Spending breakdown</h2><p>Know where it’s going</p></div>
+              <button class="select-button" id="chart-period" type="button">This month <span>⌄</span></button>
+            </div>
+            <div class="spending-content">
+              <div class="donut-wrap">
+                <div class="donut-chart" id="donut-chart"><div class="donut-hole"><span>Total spent</span><strong id="donut-total">₹0</strong><small>this month</small></div></div>
+              </div>
+              <div class="legend-list" id="category-legend"></div>
+            </div>
+            <div class="panel-footer"><span class="footer-dot"></span><span id="spending-footer">Your spending is looking good this month.</span></div>
+          </article>
+
+          <article class="panel budget-panel" id="budgets">
+            <div class="panel-heading">
+              <div><h2>Monthly budgets</h2><p>Spend with a little more intention</p></div>
+              <button class="text-button" type="button" id="edit-budget-button">Edit budgets <span>↗</span></button>
+            </div>
+            <div class="budget-overview">
+              <div><span class="budget-label">Total monthly budget</span><strong id="budget-total">₹0</strong></div>
+              <div class="budget-remaining"><span id="budget-remaining">₹0</span><small>left</small></div>
+            </div>
+            <div class="overall-track"><span id="overall-progress"></span></div>
+            <div class="budget-list" id="budget-list"></div>
+            <button class="budget-add" type="button" id="add-budget-button"><span>＋</span> Set a category budget</button>
+          </article>
+
+          <article class="panel trend-panel">
+            <div class="panel-heading">
+              <div><h2>Income vs. expenses</h2><p>A little perspective goes a long way</p></div>
+              <button class="select-button" type="button" id="trend-period">Last 6 months <span>⌄</span></button>
+            </div>
+            <div class="trend-legend"><span><i class="income-dot"></i>Income</span><span><i class="expense-dot"></i>Expenses</span></div>
+            <div class="chart-area">
+              <div class="y-axis"><span>₹80k</span><span>₹60k</span><span>₹40k</span><span>₹20k</span><span>₹0</span></div>
+              <div class="bar-chart" id="trend-chart" role="img" aria-label="Income and expenses over the last six months"></div>
+            </div>
+          </article>
+
+          <article class="panel insight-card">
+            <div class="insight-spark">✳</div>
+            <div class="insight-copy"><span class="eyebrow">A SMALL WIN</span><h2 id="insight-title">You’re doing great.</h2><p id="insight-message">A little awareness today makes for a lot less stress tomorrow.</p></div>
+            <div class="insight-illustration" aria-hidden="true"><span class="plant-pot"></span><span class="plant-stem"></span><i class="leaf leaf-one"></i><i class="leaf leaf-two"></i><i class="leaf leaf-three"></i></div>
+          </article>
+        </section>
+
+        <section class="panel transactions-panel" id="transactions">
+          <div class="transactions-heading">
+            <div><h2>Recent transactions</h2><p>Your money story, one entry at a time</p></div>
+            <div class="transaction-actions">
+              <label class="search-box"><span>⌕</span><input id="transaction-search" type="search" placeholder="Search transactions" aria-label="Search transactions"></label>
+              <select id="category-filter" class="filter-select" aria-label="Filter by category"><option value="">All categories</option></select>
+              <button class="button button-outline" id="import-button" type="button"><span>↧</span> Import CSV</button>
+              <input id="csv-input" type="file" accept=".csv,text/csv" hidden>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">TRANSACTION</th><th scope="col">CATEGORY</th><th scope="col">DATE</th><th scope="col">ACCOUNT</th><th scope="col" class="amount-heading">AMOUNT</th><th scope="col" aria-label="Actions"></th></tr></thead>
+              <tbody id="transaction-rows"></tbody>
+            </table>
+            <div class="empty-state" id="empty-state" hidden><span>◌</span><strong>No transactions found</strong><p>Try a different search or add your first transaction.</p><button class="button button-primary" type="button" data-open-dialog>Add transaction</button></div>
+          </div>
+          <div class="table-footer"><span id="transaction-count">Showing 0 transactions</span><button class="view-all" id="view-all-button" type="button">View all <span>→</span></button></div>
+        </section>
+        <footer class="page-footer"><span>Made for a healthier relationship with money.</span><span>Private by nature <b>·</b> Yours to keep</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <button class="floating-add" type="button" data-open-dialog aria-label="Add transaction">＋</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="transaction-dialog" class="app-dialog">
+    <form id="transaction-form">
+      <div class="dialog-heading"><div><span class="eyebrow">YOUR MONEY, YOUR WAY</span><h2 id="dialog-title">Add transaction</h2></div><button class="close-button" type="button" data-close-dialog aria-label="Close dialog">×</button></div>
+      <div class="type-switch" role="group" aria-label="Transaction type"><button type="button" class="type-option selected" data-type="expense">Expense</button><button type="button" class="type-option" data-type="income">Income</button></div>
+      <label class="field-label amount-field">Amount <span class="amount-input-wrap"><span>₹</span><input id="amount-input" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required inputmode="decimal"></span></label>
+      <div class="form-grid">
+        <label class="field-label">Category<select id="form-category" name="category" required></select></label>
+        <label class="field-label">Account<select name="account"><option>Everyday account</option><option>Cash wallet</option><option>Credit card</option><option>Savings account</option></select></label>
+        <label class="field-label">Date<input name="date" type="date" required></label>
+        <label class="field-label">Note <input name="note" type="text" maxlength="120" placeholder="What was it for?"></label>
+      </div>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" data-close-dialog>Cancel</button><button class="button button-primary" type="submit" id="save-transaction">Save transaction <span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="budget-dialog" class="app-dialog budget-dialog">
+    <form id="budget-form">
+      <div class="dialog-heading"><div><span class="eyebrow">A PLAN THAT FEELS RIGHT</span><h2>Set a category budget</h2></div><button class="close-button" type="button" data-close-dialog aria-label="Close dialog">×</button></div>
+      <p class="dialog-description">Choose a monthly spending limit. You can adjust it whenever you like.</p>
+      <label class="field-label">Category<select id="budget-category" required></select></label>
+      <label class="field-label">Monthly limit<span class="amount-input-wrap"><span>₹</span><input name="limit" type="number" min="1" step="1" placeholder="0" required inputmode="decimal"></span></label>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" data-close-dialog>Cancel</button><button class="button button-primary" type="submit">Save budget <span>→</span></button></div>
+    </form>
+  </dialog>
+</body>
+</html>
